@@ -1,20 +1,9 @@
 const router = require('express').Router();
-const knex = require('knex');
 
-const knexConfig = {
-  client: 'sqlite3', // the npm module we installed
-  useNullAsDefault: true, // needed when working with SQLite
-  connection: {
-    filename: './data/rolex.db3', // we need to create the data folder and the rolex.db3 database
-  },
-};
-
-const db = knex(knexConfig);
+const Roles = require('./roles-model.js');
 
 router.get('/', (req, res) => {
-  // check knex docs for the different ways to get data from tables
-  // we'll use the following format
-  db('roles') // returns a promise, so we need the bros
+  Roles.find() // returns a promise, so we need the bros
     .then(roles => {
       res.status(200).json(roles);
     })
@@ -25,11 +14,8 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  db('roles')
-    .where({ id: req.params.id }) // always returns an array
-    // show the results without adding .first(),
-    // then come back and add it to remove the wrapping array
-    .first() // grabs the first element of the returned array
+  // returns the role if it was found or a falsy value if not
+  Roles.findById(req.params.id)
     .then(role => {
       if (role) {
         res.status(200).json(role);
@@ -42,84 +28,56 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// router.post('/', (req, res) => {
-//   db('roles')
-//     .insert(req.body)
-//     .then(([id]) => {
-//       // or alternatively:
-//       // db('roles').insert(req.body).then(ids => {
-//       //   const [id] = ids;
-
-//       db('roles')
-//         .where({ id })
-//         .first()
-//         .then(role => {
-//           res.status(201).json(role);
-//         });
-//     })
-//     .catch(error => {
-//       res.status(500).json(error);
-//     });
-// });
-
-// using async/await
-router.post('/', async (req, res) => {
-  try {
-    const [id] = await db('roles').insert(req.body);
-    const role = await db('roles')
-      .where({ id })
-      .first();
-
-    res.status(201).json(role);
-  } catch (error) {
-    res.status(500).json(error);
-  }
+router.post('/', (req, res) => {
+  // returns the added role
+  Roles.add(req.body)
+    .then(role => {
+      res.status(201).json(role);
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
 });
 
+// using async/await
+// router.post('/', async (req, res) => {
+//   try {
+//     const role = await Roles.add(req.body)
+
+//     res.status(201).json(role);
+//   } catch (error) {
+//     res.status(500).json(error);
+//   }
+// });
+
 router.put('/:id', (req, res) => {
-  db('roles')
-    .where({ id: req.params.id })
-    .update(req.body)
-    .then(count => {
-      if (count > 0) {
-        db('roles')
-          .where({ id: req.params.id })
-          .first()
-          .then(role => {
-            res.status(200).json(role);
-          });
+  // returns the updated role or null if the role is not found
+  Roles.update(req.params.id, req.body)
+    .then(role => {
+      if (role) {
+        res.status(200).json(role);
       } else {
         res.status(404).json({ message: 'Role not found' });
       }
     })
     .catch(error => {
-      // this catch will be run for any errors including errors in the nested call to get the role by id
       res.status(500).json(error);
     });
 });
 
 router.delete('/:id', (req, res) => {
-  db('roles')
-    .where({ id: req.params.id })
-    .del()
-    .then(count => {
-      if (count > 0) {
-        res.status(204).end(); // we could also respond with 200 and a message
+  Roles.remove(req.params.id)
+    .then(role => {
+      if (role) {
+        // return the deleted role?
+        res.status(200).json(role);
       } else {
         res.status(404).json({ message: 'Role not found' });
       }
     })
     .catch(error => {
-      // this catch will be run for any errors including errors in the nested call to get the role by id
       res.status(500).json(error);
     });
-});
-
-// make a DELETE to /api/roles to clean the roles table and reset the ids
-router.delete('/', (req, res) => {
-  db('roles')
-    .truncate()
-    .then(count => res.status(204).end());
 });
 
 module.exports = router;
