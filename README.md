@@ -58,11 +58,13 @@ Using `POST /api/fruits`, try inserting data that violates the schema. Note the 
 
 ## Creating a database and table using SQLiteStudio
 
-1. Delete the `./data/produce.db3` database. Confirm that the API no longer functions. 
+1. **Disconnect from the produce.db3 database in SQLite Studio**. Emphasize the importance of this step, because deleting an in use database can create buggy behavior, especially on the Windows version of the app. 
 
-2. Use SQLiteStudio to create a new database, also called `produce.db3` and stored in the `./data/` directory. Emphasize it must be named exactly that. 
+2. Delete the `./data/produce.db3` database. Confirm that the API no longer functions. 
 
-3. Create a `fruits` table using SQLiteStudio.
+3. Use SQLiteStudio to create a new database, also called `produce.db3` and stored in the `./data/` directory. Emphasize it must be named exactly that. 
+
+4. Create a `fruits` table using SQLiteStudio.
 
 Fruits Table Schema
 
@@ -80,16 +82,6 @@ Fruits Table Schema
 6. Confirm that the API is working again. 
 
 **wait for students to catch up, use a `yes/no` poll to let students tell you when they are done**
-
-## Introduce Migrations
-
-When creating and updating a schema we have a number of concerns to address:
-
-- Each developers' local schema should be the same
-- The development schema should be up to date with the production schema
-- If the production schema needs to be changed, this must not corrupt any existing production data. 
-
-Migrations are a standard process for managing a database schema with respect to these issue.  
 
 **Take a break if it's a good time**
 
@@ -161,11 +153,23 @@ module.exports = db;
 
 **Take a break if it's a good time**
 
+## Introduce Migrations
+
+When creating and updating a schema we have a number of concerns to address:
+
+- Each developers' local schema should be the same
+- The development schema should be up to date with the production schema
+- If the production schema needs to be changed, this must not corrupt any existing production data. 
+
+Migrations are a standard process for managing a database schema with respect to these issue.  
+
 ## Create a Migration File
 
-1. Delete `./data/fruits.db3`. We're going to create a schema for our DB using `knex`. 
+1. **Disconnect from the produce.db3 database in SQLite Studio**. Once again, emphasize the importance of this step, because deleting a database an in use database can create buggy behavior, especially on the Windows version of the app. 
 
-2. Add the `migrations` field to `./knexfile.js`. This tells `knex` where to store our migration files. By default they'll appear in a directory called `./migrations/` in the root folder. 
+2. Delete `./data/produce.db3`. We're going to create a database and schema for our DB using `knex`. 
+
+3. Add the `migrations` field to `./knexfile.js`. This tells `knex` where to store our migration files. By default they'll appear in a directory called `./migrations/` in the root folder. 
 
 ```js
 development: {
@@ -181,7 +185,7 @@ development: {
   }
 ```
 
-3. Create a new migration by running `knex migrate:make fruits-schema`. Show that a new file has appeared in `./data/migrations/`. `knex` has automatically added a timestamp. This is important for keeping track of the order of migrations.  
+4. Create a new migration by running `knex migrate:make fruits-schema`. Show that a new file has appeared in `./data/migrations/`. `knex` has automatically added a timestamp. This is important for keeping track of the order of migrations.  
 
 ## Create a Schema with Migrations
 
