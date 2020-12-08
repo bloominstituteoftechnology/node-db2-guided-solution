@@ -1,7 +1,6 @@
 {
-  "name": "db-ii-guided",
+  "name": "node-db2-guided-solution",
   "version": "1.0.0",
-  "description": "Guided project solution for **DB II** Module.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -9,21 +8,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LambdaSchool/db-ii-guided.git"
+    "url": "git+https://github.com/LambdaSchool/node-db2-guided-solution.git"
   },
-  "keywords": [],
-  "author": "",
-  "bugs": {
-    "url": "https://github.com/LambdaSchool/db-ii-guided/issues"
-  },
-  "homepage": "https://github.com/LambdaSchool/db-ii-guided#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "helmet": "^3.20.0",
-    "knex": "^0.19.1",
-    "sqlite3": "^4.0.9"
+    "helmet": "^4.2.0",
+    "knex": "^0.21.12",
+    "sqlite3": "^5.0.0"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    "eslint": "^7.15.0",
+    "nodemon": "^2.0.6"
   }
 }
