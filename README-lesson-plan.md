@@ -14,7 +14,7 @@ The [Starter Code](https://github.com/LambdaSchool/node-db2-guided) for this pro
 
 ## Introduce Module Challenge
 
-Introduce the project for the afternoon. If they are done early, encourage them to study tomorrow's content and follow the tutorials on TK.
+Introduce the project for the afternoon. If they are done early, encourage them to study tomorrow's content and follow the tutorials on Canvas.
 
 ## Introduce Database Mangement Systems
 
@@ -148,7 +148,7 @@ When creating and updating a schema we have a number of concerns to address:
 - The development schema should be up to date with the production schema
 - If the production schema needs to be changed, this must not corrupt any existing production data.
 
-Migrations are a standard process for managing a database schema with respect to these issue.  
+Migrations are a standard process for managing a database schema with respect to these issue.
 
 ## Create a Migration File
 
@@ -172,13 +172,13 @@ development: {
   }
 ```
 
-4. Create a new migration by running `knex migrate:make fruits-schema`. Show that a new file has appeared in `./data/migrations/`. `knex` has automatically added a timestamp. This is important for keeping track of the order of migrations.  
+4. Create a new migration by running `knex migrate:make fruits-schema`. Show that a new file has appeared in `./data/migrations/`. `knex` has automatically added a timestamp. This is important for keeping track of the order of migrations.
 
 ## Create a Schema with Migrations
 
-Using the `Schema Builder` in `knex` we can now defined our schema in this file. 
+Using the `Schema Builder` in `knex` we can now defined our schema in this file.
 
-1. Add code into `up` in the `fruits-schema` migration file. This tells knex how to add the table to the db. 
+1. Add code into `up` in the `fruits-schema` migration file. This tells knex how to add the table to the db.
 
 ```js
 exports.up = function(knex, Promise) {
@@ -221,9 +221,9 @@ Notice that we forgot to set `notNullable` on for `avgWeightOz`. If we notice th
 
 2. Run `knex migrate:latest`
 
-3. Post a new fruit entry, missing the `avgWeightOz` field. Notice the database doesn't reject this. Our migration was not updated. When we ran `knex migrate:latest` no files ran because it doesn't detect changes to existing migrations. 
+3. Post a new fruit entry, missing the `avgWeightOz` field. Notice the database doesn't reject this. Our migration was not updated. When we ran `knex migrate:latest` no files ran because it doesn't detect changes to existing migrations.
 
-4. Run `knex migrate:rollback`. This undoes that migration. Make a `GET` request to confirm the table is gone. 
+4. Run `knex migrate:rollback`. This undoes that migration. Make a `GET` request to confirm the table is gone.
 
 5. Run `knex migrate:latest`. We've now rerun our schema file.
 
@@ -231,16 +231,16 @@ Notice that we forgot to set `notNullable` on for `avgWeightOz`. If we notice th
 
 ## Update a Schema with Migrations
 
-Once any migrations have been pushed and merged into the master branch, we **should not** edit them. Instead, write a new migration for any changes. For example, perhaps a few months into the release of our fruit app we decide we want to track color. 
+Once any migrations have been pushed and merged into the master branch, we **should not** edit them. Instead, write a new migration for any changes. For example, perhaps a few months into the release of our fruit app we decide we want to track color.
 
 1. Create a new migration with `knex migrate:make fruits-color`
 
-2. Write the `up` and `down` function for this migration. 
+2. Write the `up` and `down` function for this migration.
 
 ```js
 exports.up = function(knex, Promise) {
   // use knex.schema.table() for updating tables
-  return knex.schema.table('fruits', tbl => {  
+  return knex.schema.table('fruits', tbl => {
     tbl.string('color', 128);
   });
 };
