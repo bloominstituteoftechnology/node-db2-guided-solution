@@ -2,7 +2,7 @@
 
 Guided project solution for **DB II** Module.
 
-Starter code is here: [Web DB II Guided Project](https://github.com/LambdaSchool/node-db2-guided).
+Starter code is here: [Web DB II Guided Project](https://github.com/BloomInstituteOfTechnology/node-db2-guided).
 
 ## Prerequisites
 
@@ -10,7 +10,7 @@ Starter code is here: [Web DB II Guided Project](https://github.com/LambdaSchool
 
 ## Starter Code
 
-The [Starter Code](https://github.com/LambdaSchool/node-db2-guided) for this project is configured to run the server by typing `npm run server`. The server will restart automatically on changes.
+The [Starter Code](https://github.com/BloomInstituteOfTechnology/node-db2-guided) for this project is configured to run the server by typing `npm run server`. The server will restart automatically on changes.
 
 ## Introduce Module Challenge
 
