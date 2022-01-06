@@ -72,13 +72,17 @@ Fruits Table Schema
 
 **Take a break if it's a good time**
 
+## Project Preparation
+
+Demo how to install Eslint in the project running `npx eslint --init` and advising learners to install the Eslint extension for VSCode.
+
 ## Knex Setup
 
 1. We need the `knex` and `sqlite3` libraries. Knex uses different database drivers, depending on the target DBMS. For SQLite it uses the `sqlite3` npm module. Note that both libraries have already been added into this particular repo.
 
-2. Open the `./fruits/fruits-router.js` file. Show where knex is configured, but mention that this not best practice. Delete the knex related code as the top of the file.
+2. Open the `./fruits/fruits-model.js` file. Show where knex is configured, but mention that this not best practice. Delete the knex related code as the top of the file.
 
-3. In order easily generate a configure `knex`, we can use the command: `knex init`. The students should have already globally installed `knex` in the preclass videos, but if not they may do so now or use `npx knex init`.
+3. In order easily generate a configuration `knexfile.js` file, we can use the command: `npx knex init`.
 
 4. Open `./knexfile.js`. We have auto generated config objects for three different environments. We may delete all except for the development object.
 
@@ -128,7 +132,7 @@ const db = knex(config.development);
 module.exports = db;
 ```
 
-7. At the top of `./fruits/fruits-router.js`, import our config file.
+7. At the top of `./fruits/fruits-model.js`, import our config file.
 
 ```js
   const db = require('../data/db-config.js');
@@ -241,7 +245,7 @@ Once any migrations have been pushed and merged into the master branch, we **sho
 exports.up = function(knex, Promise) {
   // use knex.schema.table() for updating tables
   return knex.schema.table('fruits', tbl => {
-    tbl.string('color', 128);
+    tbl.string('color', 128).defaultTo('green');
   });
 };
 

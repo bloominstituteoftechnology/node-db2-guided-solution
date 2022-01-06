@@ -1,9 +1,9 @@
 const knex = require('knex');
 
-const config = require('../knexfile.js');
+const configs = require('../knexfile.js');
 
-// we must select the development object from our knexfile
-const db = knex(config.development);
+const env = process.env.NODE_ENV || 'development';
 
-// export for use in models
-module.exports = db;
+const connection = knex(configs[env]);
+
+module.exports = connection; // the connection is what we require as "db" elsewhere

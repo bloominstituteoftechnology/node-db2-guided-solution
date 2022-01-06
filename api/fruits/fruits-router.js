@@ -1,44 +1,45 @@
-const express = require('express');
+const Fruit = require('./fruits-model');
+const router = require('express').Router();
 
-const db = require('../../data/db-config.js');
-
-const router = express.Router();
-
-router.get('/', (req, res) => {
-  db('fruits')
+router.get('/', (req, res, next) => {
+  Fruit.getAll()
     .then(fruits => {
       res.json(fruits);
     })
     .catch(err => {
-      res.status(500).json({ message: 'Failed to retrieve fruits' });
+      next({ message: `Failed to retrieve fruits: ${err.message}` });
     });
 });
 
-router.get('/:id', (req, res) => {
-  const { id } = req.params;
-
-  db('fruits').where({ id }).first()
+router.get('/:id', (req, res, next) => {
+  Fruit.getById(req.params.id)
     .then(fruit => {
-      res.json(fruit);
+      if (fruit) { // middleware should perform this check
+        res.json(fruit);
+      } else {
+        next({ message: `Failed to retrieve fruit`, status: 404 });
+      }
     })
     .catch(err => {
-      res.status(500).json({ message: 'Failed to retrieve fruit' });
+      next({ message: `Failed to retrieve fruit: ${err.message}` });
     });
 });
 
-router.post('/', (req, res) => {
-  const fruitData = req.body;
-  db('fruits').insert(fruitData)
-    .then(ids => {
-      db('fruits').where({ id: ids[0] })
-        .then(newFruitEntry => {
-          res.status(201).json(newFruitEntry);
-        });
+router.post('/', (req, res, next) => {
+  Fruit.create(req.body)
+    .then(newFruitEntry => {
+      res.status(201).json(newFruitEntry);
     })
     .catch(err => {
-      console.log('POST error', err);
-      res.status(500).json({ message: "Failed to store data" });
+      next({ message: `Failed to create fruit: ${err.message}` });
     });
+});
+
+router.use((err, req, res, next) => { // eslint-disable-line
+  res.status(err.status || 500).json({
+    message: err.message,
+    stack: err.stack,
+  });
 });
 
 module.exports = router;
