@@ -14,13 +14,13 @@
     "url": "git+https://github.com/BloomInstituteOfTechnology/node-db2-guided-solution.git"
   },
   "dependencies": {
+    "@vscode/sqlite3": "^5.0.7",
     "express": "^4.17.2",
     "helmet": "^5.0.1",
-    "knex": "^0.95.15",
-    "sqlite3": "^5.0.2"
+    "knex": "^1.0.1"
   },
   "devDependencies": {
-    "eslint": "^8.6.0",
+    "eslint": "^8.7.0",
     "nodemon": "^2.0.15"
   }
 }
