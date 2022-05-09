@@ -15,10 +15,10 @@
     "url": "git+https://github.com/BloomInstituteOfTechnology/node-db2-guided-solution.git"
   },
   "dependencies": {
-    "@vscode/sqlite3": "^5.0.8",
+    "sqlite3": "^5.0.8",
     "express": "^4.17.3",
     "helmet": "^5.0.2",
-    "knex": "^1.0.5"
+    "knex": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "^8.12.0",
